@@ -1060,6 +1060,8 @@
 %
 % 如果需要使用 arial 字体，请打开 [arial] 选项
 %    \begin{macrocode}
+\newif\ifthu@nofonts\thu@nofontsfalse
+\DeclareOption{nofonts}{\thu@nofontstrue}
 \newif\ifthu@arial
 \DeclareOption{arial}{\thu@arialtrue}
 %    \end{macrocode}
@@ -1101,7 +1103,11 @@
 \ExecuteOptions{utf,arialtitle}
 \ProcessOptions\relax
 \PassOptionsToPackage{no-math}{fontspec}
-\LoadClass[cs4size,a4paper,openany,nocap,UTF8]{ctexbook}
+\ifthu@nofonts
+  \LoadClass[cs4size,a4paper,openany,nocap,UTF8,nofonts]{ctexbook}
+\else
+  \LoadClass[cs4size,a4paper,openany,nocap,UTF8]{ctexbook}
+\fi
 %    \end{macrocode}
 %
 % 用户至少要提供一个选项：指定论文类型。
@@ -1189,7 +1195,7 @@
 % 改 \file{thufonts.def} 文件。缺少中文字体的 Linux 用户可以通
 % 过 \file{thufonts.def} 文件定义字体。
 %    \begin{macrocode}
-  \ifCTEX@nofonts
+  \ifthu@nofonts
     \input{thufonts.def}
   \fi
 
